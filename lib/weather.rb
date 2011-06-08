@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'nokogiri'
-require 'fastercsv'
 
 class Weather
   def initialize( string )
