@@ -22,15 +22,21 @@ class Weather
   end
   
   def day_of_max_temp_diff    
-    return @day_of_max_temp_diff if @day_of_max_temp_diff
-
+    @day_of_max_temp_diff ||= calculate_diff( :max )
+  end
+  
+  def day_of_min_temp_diff
+    @day_of_min_temp_diff ||= calculate_diff( :min )
+  end
+  
+  private
+  
+  def calculate_diff( method )    
     rows = data[1..-2]
     diffs = rows.map do |row|
       (row[1].to_i - row[2].to_i).abs
     end
     
-    @day_of_max_temp_diff = rows[diffs.index(diffs.max)][0]
-    
-    @day_of_max_temp_diff
+    rows[diffs.index(diffs.send(method))][0]
   end
 end
